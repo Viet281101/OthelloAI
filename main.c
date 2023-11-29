@@ -5,6 +5,28 @@ int board[BOARD_SIZE][BOARD_SIZE];
 int currentPlayer = 1; //// 1 = white, 2 = black
 
 
+void drawStableCorners() {
+    glColor3f(0.0, 0.0, 0.0);
+    float radius = CELL_SIZE * 0.05;
+    float offset = CELL_SIZE * 2.0;
+    float corners[4][2] = {
+        {offset, offset},
+        {BOARD_SIZE * CELL_SIZE - offset, offset},
+        {offset, BOARD_SIZE * CELL_SIZE - offset},
+        {BOARD_SIZE * CELL_SIZE - offset, BOARD_SIZE * CELL_SIZE - offset}
+    };
+
+    for (int i = 0; i < 4; i++) {
+        glBegin(GL_POLYGON);
+        for (int j = 0; j < 360; j++) {
+            float degInRad = j * DEG2RAD;
+            glVertex2f(cos(degInRad) * radius + corners[i][0], sin(degInRad) * radius + corners[i][1]);
+        }
+        glEnd();
+    }
+}
+
+
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -28,6 +50,9 @@ void display() {
         glVertex2f(BOARD_SIZE * CELL_SIZE, i * CELL_SIZE);
     }
     glEnd();
+
+	// Draw the stable corners
+	drawStableCorners();
 
     glFlush();
 };
