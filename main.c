@@ -5,10 +5,10 @@ int board[BOARD_SIZE][BOARD_SIZE];
 int currentPlayer = 1; //// 1 = white, 2 = black
 
 void initBoard() {
-    // Clear the board
+    //// Clear the board
     memset(board, 0, sizeof(board));
 
-    // Set up the initial four pieces
+    //// Set up the initial four pieces
     int mid = BOARD_SIZE / 2;
     board[mid][mid] = 1;
     board[mid-1][mid-1] = 1;
@@ -51,6 +51,24 @@ void drawPiece(int x, int y, int player) {
     glEnd();
 };
 
+void drawHintCircle(int x, int y) {
+    if (currentPlayer == 1) {
+        glColor3f(1.0, 1.0, 1.0); // White color for the hint circle
+    } else {
+        glColor3f(0.0, 0.0, 0.0); // Black color for the hint circle
+    }
+    float centerX = (x + 0.5) * CELL_SIZE;
+    float centerY = (BOARD_SIZE - y - 0.5) * CELL_SIZE;
+    float radius = CELL_SIZE * 0.4; // Adjust radius size as needed
+
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i < 360; i++) {
+        float degInRad = i * DEG2RAD;
+        glVertex2f(cos(degInRad) * radius + centerX, sin(degInRad) * radius + centerY);
+    }
+    glEnd();
+};
+
 
 /*
 *@param (flag) the current board state to be displayed
@@ -58,7 +76,7 @@ void drawPiece(int x, int y, int player) {
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // Draw the Othello board with a single color (#009067)
+    //// Draw the Othello board with a single color (#009067)
     glColor3f(0.0, 0.56, 0.4); // Dark green using the hex color #009067
     for (int x = 0; x < BOARD_SIZE; x++) {
         for (int y = 0; y < BOARD_SIZE; y++) {
@@ -66,20 +84,20 @@ void display() {
         }
     }
 
-    // Draw the grid lines
+    //// Draw the grid lines
     glColor3f(0.0, 0.0, 0.0); // Black color for the lines
     glBegin(GL_LINES);
     for (int i = 0; i <= BOARD_SIZE; i++) {
-        // Vertical lines
+        //// Vertical lines
         glVertex2f(i * CELL_SIZE, 0);
         glVertex2f(i * CELL_SIZE, BOARD_SIZE * CELL_SIZE);
-        // Horizontal lines
+        //// Horizontal lines
         glVertex2f(0, i * CELL_SIZE);
         glVertex2f(BOARD_SIZE * CELL_SIZE, i * CELL_SIZE);
     }
     glEnd();
 
-    // Draw the pieces
+    //// Draw the pieces
     for (int x = 0; x < BOARD_SIZE; x++) {
         for (int y = 0; y < BOARD_SIZE; y++) {
             if (board[x][y] != 0) {
@@ -88,8 +106,17 @@ void display() {
         }
     }
 
-	// Draw the stable corners
+	//// Draw the stable corners
 	drawStableCorners();
+
+    //// Draw the hint circle
+    for (int x = 0; x < BOARD_SIZE; x++) {
+        for (int y = 0; y < BOARD_SIZE; y++) {
+            if (board[x][y] == 0 && isValidMove(board, x, y, currentPlayer)) {
+                drawHintCircle(x, y);
+            }
+        }
+    }
 
     glFlush();
 };
