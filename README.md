@@ -3,7 +3,7 @@
 
 Un jeu d'Othello avec l'IA en utilse le langage C et openGL GLUT
 
-Pour comment jouer l'Othello, cliquer sur l'image suivant:
+Pour savoir comment jouer l'Othello, cliquer sur l'image suivant:
 
 [![alt text](othello_start.png)](https://www.eothello.com/)
 

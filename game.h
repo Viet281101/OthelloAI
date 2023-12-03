@@ -5,6 +5,7 @@
 #include <GL/freeglut.h>  
 
 #include <math.h>
+#include <string.h>
 
 /* pour Mac */
 // #include <GLUT/glut.h>

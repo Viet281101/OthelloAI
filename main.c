@@ -4,6 +4,17 @@
 int board[BOARD_SIZE][BOARD_SIZE];
 int currentPlayer = 1; //// 1 = white, 2 = black
 
+void initBoard() {
+    // Clear the board
+    memset(board, 0, sizeof(board));
+
+    // Set up the initial four pieces
+    int mid = BOARD_SIZE / 2;
+    board[mid][mid] = 1;
+    board[mid-1][mid-1] = 1;
+    board[mid-1][mid] = 2;
+    board[mid][mid-1] = 2;
+}
 
 void drawStableCorners() {
     glColor3f(0.0, 0.0, 0.0);
@@ -26,7 +37,24 @@ void drawStableCorners() {
     }
 };
 
+void drawPiece(int x, int y, int player) {
+    glColor3f(player == 1 ? 1.0 : 0.0, player == 1 ? 1.0 : 0.0, player == 1 ? 1.0 : 0.0); // White for player 1, black for player 2
+    float centerX = (x + 0.5) * CELL_SIZE;
+    float centerY = (BOARD_SIZE - y - 0.5) * CELL_SIZE;
+    float radius = CELL_SIZE * 0.4; // Adjust radius size as needed
 
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 360; i++) {
+        float degInRad = i * DEG2RAD;
+        glVertex2f(cos(degInRad) * radius + centerX, sin(degInRad) * radius + centerY);
+    }
+    glEnd();
+};
+
+
+/*
+*@param (flag) the current board state to be displayed
+*/
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -50,6 +78,15 @@ void display() {
         glVertex2f(BOARD_SIZE * CELL_SIZE, i * CELL_SIZE);
     }
     glEnd();
+
+    // Draw the pieces
+    for (int x = 0; x < BOARD_SIZE; x++) {
+        for (int y = 0; y < BOARD_SIZE; y++) {
+            if (board[x][y] != 0) {
+                drawPiece(x, y, board[x][y]);
+            }
+        }
+    }
 
 	// Draw the stable corners
 	drawStableCorners();
@@ -86,6 +123,7 @@ void init() {
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glMatrixMode(GL_PROJECTION);
     gluOrtho2D(0.0, BOARD_SIZE * CELL_SIZE, 0.0, BOARD_SIZE * CELL_SIZE);
+    initBoard();
 };
 
 
