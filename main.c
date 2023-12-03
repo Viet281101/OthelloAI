@@ -24,7 +24,7 @@ void drawStableCorners() {
         }
         glEnd();
     }
-}
+};
 
 
 void display() {
