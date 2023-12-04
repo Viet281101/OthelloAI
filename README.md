@@ -20,6 +20,14 @@ Pour savoir comment jouer l'Othello, cliquer sur l'image suivant:
     ```
   
 ### Pour compiler le jeu :
+- Aller dans le répertoire de dossier "AI_Player" ou "Human_Player"
+    ```
+    cd Human_Player/
+    ```
+    ou
+    ```
+    cd AI_Player/
+    ```
 - Compiler avec le Makefile:
     ```
     make

@@ -125,7 +125,7 @@ int main(int argc, char** argv) {
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(BOARD_SIZE * CELL_SIZE, BOARD_SIZE * CELL_SIZE);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Othello Game");
+	glutCreateWindow("Othello Game (AI Player)");
 	init();
 	glutMouseFunc(mouseClick);
 	glutDisplayFunc(display);
