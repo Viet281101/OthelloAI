@@ -17,8 +17,11 @@
 #define DEG2RAD (3.14159/180.0)
 
 //// draw.c
+void drawBoard();
+void drawGridLines();
 void drawStableCorners();
 void drawPiece(int x, int y, int player);
+void drawHintCircle(int x, int y, int player);
 
 //// move.c
 bool isValidMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player);
