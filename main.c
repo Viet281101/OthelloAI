@@ -4,6 +4,9 @@
 int board[BOARD_SIZE][BOARD_SIZE];
 int currentPlayer = 1; //// 1 = white, 2 = black
 
+/*
+*@param (flag) initialize the board with the initial four pieces at the center of the board
+*/
 void initBoard() {
     //// Clear the board
     memset(board, 0, sizeof(board));
@@ -16,6 +19,9 @@ void initBoard() {
     board[mid][mid-1] = 2;
 }
 
+/*
+*@param (flag) draw the stable corners (the four corners) of the board
+*/
 void drawStableCorners() {
     glColor3f(0.0, 0.0, 0.0);
     float radius = CELL_SIZE * 0.05;
@@ -37,6 +43,9 @@ void drawStableCorners() {
     }
 };
 
+/*
+*@param (flag) draw a piece at (x, y) with the given player
+*/
 void drawPiece(int x, int y, int player) {
     glColor3f(player == 1 ? 1.0 : 0.0, player == 1 ? 1.0 : 0.0, player == 1 ? 1.0 : 0.0); // White for player 1, black for player 2
     float centerX = (x + 0.5) * CELL_SIZE;
@@ -51,6 +60,9 @@ void drawPiece(int x, int y, int player) {
     glEnd();
 };
 
+/*
+*@param (flag) draw a hint circle at (x, y) with the given player
+*/
 void drawHintCircle(int x, int y) {
     if (currentPlayer == 1) {
         glColor3f(1.0, 1.0, 1.0); // White color for the hint circle
