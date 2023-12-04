@@ -1,7 +1,7 @@
 
 # IA pour le jeu d'Othello
 
-Un jeu d'Othello avec l'IA en utilse le langage C et openGL GLUT
+Un jeu d'Othello avec l'IA en utilse le langage C et openGL GLUT. Il existe 2 modes de jeu: jouer avec l'humain et jouer avec l'intelligence artificielle.
 
 Pour savoir comment jouer l'Othello, cliquer sur l'image suivant:
 
@@ -20,7 +20,7 @@ Pour savoir comment jouer l'Othello, cliquer sur l'image suivant:
     ```
   
 ### Pour compiler le jeu :
-- Aller dans la répertoire de dossier "AI_Player" ou "Human_Player"
+- Aller dans la répertoire du projet "AI_Player" ou "Human_Player"
     ```
     cd Human_Player/
     ```

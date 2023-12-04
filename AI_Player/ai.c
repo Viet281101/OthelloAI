@@ -1,5 +1,8 @@
 
 #include "game.h"
+#include "minimax.h"
+#include "alphabeta.h"
+
 
 int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE], int player) {
     int opponent = (player == 1) ? 2 : 1;
