@@ -75,7 +75,7 @@ void display() {
 	int whiteCount, blackCount;
 	countPieces(board, &whiteCount, &blackCount);
 	drawScoreBoard(whiteCount, blackCount, currentPlayer);
-	checkTurnCountPieces(whiteCount, blackCount);
+	// checkTurnCountPieces(whiteCount, blackCount);
 
 	glFlush();
 };

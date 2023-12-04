@@ -94,9 +94,53 @@ void drawHintCircle(int x, int y, int player) {
 	glEnd();
 };
 
+/*
+*@param (flag) draw text on the screen
+*/
+void drawText(char *text, int length, int x, int y) {
+    glMatrixMode(GL_PROJECTION);
+    double *matrix = malloc(sizeof(double) * 16);
+    glGetDoublev(GL_PROJECTION_MATRIX, matrix);
+    glLoadIdentity();
+    glOrtho(0, 800, 0, 600, -5, 5);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glPushMatrix();
+    glLoadIdentity();
+    glRasterPos2i(x, y);
+    for (int i = 0; i < length; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_8_BY_13, (int)text[i]);
+    }
+    glPopMatrix();
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixd(matrix);
+    glMatrixMode(GL_MODELVIEW);
+};
+
 
 /*
 *@param (flag) draw the Othello score board
 */
-void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer) {};
+void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer) {
+    char *whiteScore = malloc(sizeof(char) * 10);
+    char *blackScore = malloc(sizeof(char) * 10);
+    char *currentPlayerText = malloc(sizeof(char) * 10);
+    char *player1 = "White";
+    char *player2 = "Black";
+
+    sprintf(whiteScore, "%d", whiteCount);
+    sprintf(blackScore, "%d", blackCount);
+    if (currentPlayer == 1) {
+        sprintf(currentPlayerText, "%s's Turn", player1);
+    } else if (currentPlayer == 2) {
+        sprintf(currentPlayerText, "%s's Turn", player2);
+    }
+
+    glColor3f(0.0, 0.0, 0.0);
+    drawText("White", 5, 10, 580);
+    drawText(whiteScore, strlen(whiteScore), 10, 560);
+    drawText("Black", 5, 10, 520);
+    drawText(blackScore, strlen(blackScore), 10, 500);
+    drawText(currentPlayerText, strlen(currentPlayerText), 10, 460);
+};
 
