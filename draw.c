@@ -94,3 +94,9 @@ void drawHintCircle(int x, int y, int player) {
 	glEnd();
 };
 
+
+/*
+*@param (flag) draw the Othello score board
+*/
+void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer) {};
+

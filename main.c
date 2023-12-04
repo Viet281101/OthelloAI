@@ -20,9 +20,7 @@ void initBoard() {
 };
 
 
-void checkTurnCountPieces() {
-	int whiteCount, blackCount;
-	countPieces(board, &whiteCount, &blackCount);
+void checkTurnCountPieces(int whiteCount, int blackCount) {
 	printf("White: %d, Black: %d\n", whiteCount, blackCount);
 	if (currentPlayer == 1) {
 		printf("White's turn\n");
@@ -73,8 +71,11 @@ void display() {
 		}
 	}
 
-	//// Check the turn and count the pieces
-	checkTurnCountPieces();
+	//// Draw the score board
+	int whiteCount, blackCount;
+	countPieces(board, &whiteCount, &blackCount);
+	drawScoreBoard(whiteCount, blackCount, currentPlayer);
+	checkTurnCountPieces(whiteCount, blackCount);
 
 	glFlush();
 };
