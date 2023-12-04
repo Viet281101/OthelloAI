@@ -65,9 +65,9 @@ void drawPiece(int x, int y, int player) {
 */
 void drawHintCircle(int x, int y) {
     if (currentPlayer == 1) {
-        glColor3f(1.0, 1.0, 1.0); // White color for the hint circle
+        glColor3f(1.0, 1.0, 1.0); // White color hint
     } else {
-        glColor3f(0.0, 0.0, 0.0); // Black color for the hint circle
+        glColor3f(0.0, 0.0, 0.0); // Black color hint
     }
     float centerX = (x + 0.5) * CELL_SIZE;
     float centerY = (BOARD_SIZE - y - 0.5) * CELL_SIZE;
@@ -109,6 +109,9 @@ void display() {
     }
     glEnd();
 
+	//// Draw the stable corners
+	drawStableCorners();
+
     //// Draw the pieces
     for (int x = 0; x < BOARD_SIZE; x++) {
         for (int y = 0; y < BOARD_SIZE; y++) {
@@ -117,9 +120,6 @@ void display() {
             }
         }
     }
-
-	//// Draw the stable corners
-	drawStableCorners();
 
     //// Draw the hint circle
     for (int x = 0; x < BOARD_SIZE; x++) {
@@ -133,7 +133,9 @@ void display() {
     glFlush();
 };
 
-
+/*
+*@param (flag) handle the mouse click event
+*/
 void mouseClick(int button, int state, int x, int y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         //// Get the cell position

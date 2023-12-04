@@ -26,7 +26,7 @@ bool checkDirection(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int dx, int
 };
 
 /*
-*@param (flag) 0: check if the move is valid or not (return true/false)
+*@param (flag) check if the move is valid or not (return true/false)
 */
 bool isValidMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player) {
     if (board[x][y] != 0) return false;
