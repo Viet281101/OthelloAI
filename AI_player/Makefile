@@ -17,7 +17,7 @@ LDFLAGS = -lm $(GL_LDFLAGS)
 #definition des fichiers et dossiers
 PROGNAME = othello
 HEADERS = game.h
-SOURCES = main.c move.c draw.c
+SOURCES = main.c move.c draw.c ai.c
 OBJ = $(SOURCES:.c=.o)
 DELPROG = compressed_image.rle
 

@@ -29,17 +29,17 @@ bool checkDirection(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int dx, int
 *@param (flag) check if the move is valid or not (return true/false)
 */
 bool isValidMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player) {
-    if (board[x][y] != 0) return false;
+	if (board[x][y] != 0) return false;
 
-    for (int dx = -1; dx <= 1; dx++) {
-        for (int dy = -1; dy <= 1; dy++) {
-            if (dx == 0 && dy == 0) continue;
+	for (int dx = -1; dx <= 1; dx++) {
+		for (int dy = -1; dy <= 1; dy++) {
+			if ((dx != 0 || dy != 0) && checkDirection(board, x, y, dx, dy, player)) {
+				return true;
+			}
+		}
+	}
 
-            if (checkDirection(board, x, y, dx, dy, player)) return true;
-        }
-    }
-
-    return false;
+	return false;
 };
 
 /*
@@ -47,21 +47,27 @@ bool isValidMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player) {
 */
 void makeMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player) {
 	board[x][y] = player;
+	int opponent = (player == 1) ? 2 : 1;
 
 	for (int dx = -1; dx <= 1; dx++) {
 		for (int dy = -1; dy <= 1; dy++) {
 			if (dx == 0 && dy == 0) continue;
 
-			if (checkDirection(board, x, y, dx, dy, player)) {
-				int opponent = player == 1 ? 2 : 1;
+			int nx = x + dx;
+			int ny = y + dy;
+			int piecesToFlip = 0;
 
-				int i = x + dx;
-				int j = y + dy;
+			while (nx >= 0 && nx < BOARD_SIZE && ny >= 0 && ny < BOARD_SIZE && board[nx][ny] == opponent) {
+				piecesToFlip++;
+				nx += dx;
+				ny += dy;
+			}
 
-				while (board[i][j] == opponent) {
-					board[i][j] = player;
-					i += dx;
-					j += dy;
+			if (nx >= 0 && nx < BOARD_SIZE && ny >= 0 && ny < BOARD_SIZE && board[nx][ny] == player && piecesToFlip > 0) {
+				while (piecesToFlip-- > 0) {
+					nx -= dx;
+					ny -= dy;
+					board[nx][ny] = player;
 				}
 			}
 		}

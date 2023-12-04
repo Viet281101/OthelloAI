@@ -1,5 +1,6 @@
 
 #include <math.h>
+#include <time.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -16,6 +17,9 @@
 #define CELL_SIZE 80
 #define DEG2RAD (3.14159/180.0)
 
+#ifndef GAME_H
+#define GAME_H
+
 ////* -- draw.c -- *////
 void drawBoard();
 void drawGridLines();
@@ -29,3 +33,10 @@ bool isValidMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player);
 void makeMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player);
 void countPieces(int board[BOARD_SIZE][BOARD_SIZE], int *whiteCount, int *blackCount);
 bool isGameOver(int board[BOARD_SIZE][BOARD_SIZE]);
+
+
+////* -- ai.c -- *////
+int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE], int player);
+
+
+#endif
