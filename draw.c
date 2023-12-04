@@ -121,7 +121,7 @@ void drawText(char *text, int length, int x, int y) {
 /*
 *@param (flag) draw the Othello score board
 */
-void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer) {
+void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer, int board[BOARD_SIZE][BOARD_SIZE]) {
     char *whiteScore = malloc(sizeof(char) * 10);
     char *blackScore = malloc(sizeof(char) * 10);
     char *currentPlayerText = malloc(sizeof(char) * 10);
@@ -130,11 +130,21 @@ void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer) {
 
     sprintf(whiteScore, "%d", whiteCount);
     sprintf(blackScore, "%d", blackCount);
-    if (currentPlayer == 1) {
-        sprintf(currentPlayerText, "%s's Turn", player1);
-    } else if (currentPlayer == 2) {
-        sprintf(currentPlayerText, "%s's Turn", player2);
-    }
+    if (isGameOver(board)) {
+		if (whiteCount > blackCount) {
+			sprintf(currentPlayerText, "%s wins!", player1);
+		} else if (whiteCount < blackCount) {
+			sprintf(currentPlayerText, "%s wins!", player2);
+		} else {
+			sprintf(currentPlayerText, "Draw!");
+		}
+	} else {
+		if (currentPlayer == 1) {
+			sprintf(currentPlayerText, "%s's turn", player1);
+		} else if (currentPlayer == 2) {
+			sprintf(currentPlayerText, "%s's turn", player2);
+		}
+	}
 
     glColor3f(0.0, 0.0, 0.0);
     drawText("White", 5, 10, 580);

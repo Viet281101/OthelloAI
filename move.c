@@ -82,3 +82,27 @@ void countPieces(int board[BOARD_SIZE][BOARD_SIZE], int *whiteCount, int *blackC
 	}
 };
 
+
+/*
+*@param (flag) check if the game is over or not
+*/
+bool isGameOver(int board[BOARD_SIZE][BOARD_SIZE]) {
+	int whiteCount, blackCount;
+	countPieces(board, &whiteCount, &blackCount);
+	if (whiteCount + blackCount == BOARD_SIZE * BOARD_SIZE) {
+		return true;
+	}
+
+	for (int x = 0; x < BOARD_SIZE; x++) {
+		for (int y = 0; y < BOARD_SIZE; y++) {
+			if (board[x][y] == 0) {
+				if (isValidMove(board, x, y, 1) || isValidMove(board, x, y, 2)) {
+					return false;
+				}
+			}
+		}
+	}
+
+	return true;
+};
+
