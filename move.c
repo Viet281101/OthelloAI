@@ -89,20 +89,26 @@ void countPieces(int board[BOARD_SIZE][BOARD_SIZE], int *whiteCount, int *blackC
 bool isGameOver(int board[BOARD_SIZE][BOARD_SIZE]) {
 	int whiteCount, blackCount;
 	countPieces(board, &whiteCount, &blackCount);
+
 	if (whiteCount + blackCount == BOARD_SIZE * BOARD_SIZE) {
 		return true;
 	}
 
+	bool whiteMovesAvailable = false;
+	bool blackMovesAvailable = false;
 	for (int x = 0; x < BOARD_SIZE; x++) {
 		for (int y = 0; y < BOARD_SIZE; y++) {
 			if (board[x][y] == 0) {
-				if (isValidMove(board, x, y, 1) || isValidMove(board, x, y, 2)) {
-					return false;
-				}
+				if (isValidMove(board, x, y, 1)) whiteMovesAvailable = true;
+				if (isValidMove(board, x, y, 2)) blackMovesAvailable = true;
 			}
 		}
 	}
 
-	return true;
+	if (!whiteMovesAvailable && !blackMovesAvailable) {
+		return true;
+	}
+
+	return false;
 };
 

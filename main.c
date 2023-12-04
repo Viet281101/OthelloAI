@@ -24,17 +24,17 @@ void checkTurnCountPieces(int whiteCount, int blackCount) {
 	printf("White: %d, Black: %d\n", whiteCount, blackCount);
 	if (isGameOver(board)) {
 		if (whiteCount > blackCount) {
-			printf("White wins!\n");
+			printf("GAME OVER ! White wins!\n");
 		} else if (whiteCount < blackCount) {
-			printf("Black wins!\n");
+			printf("GAME OVER ! Black wins!\n");
 		} else {
-			printf("Draw!\n");
+			printf("GAME OVER ! Draw!\n");
 		}
 	} else {
 		if (currentPlayer == 1) {
-			printf("White's turn\n");
+			printf("White's turn\n\n");
 		} else if (currentPlayer == 2) {
-			printf("Black's turn\n");
+			printf("Black's turn\n\n");
 		}
 	}
 };
@@ -76,7 +76,7 @@ void display() {
 	int whiteCount, blackCount;
 	countPieces(board, &whiteCount, &blackCount);
 	drawScoreBoard(whiteCount, blackCount, currentPlayer, board);
-	// checkTurnCountPieces(whiteCount, blackCount);
+	checkTurnCountPieces(whiteCount, blackCount);
 
 	glFlush();
 };
