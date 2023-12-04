@@ -15,5 +15,9 @@
 #define CELL_SIZE 80
 #define DEG2RAD (3.14159/180.0)
 
+//// draw.c
+void drawStableCorners();
+void drawPiece(int x, int y, int player);
+
 bool isValidMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player);
 void makeMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player);
