@@ -68,3 +68,17 @@ void makeMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player) {
 	}
 };
 
+/*
+*@param (flag) count the number of pieces of each player
+*/
+void countPieces(int board[BOARD_SIZE][BOARD_SIZE], int *whiteCount, int *blackCount) {
+	*whiteCount = 0;
+	*blackCount = 0;
+	for (int x = 0; x < BOARD_SIZE; x++) {
+		for (int y = 0; y < BOARD_SIZE; y++) {
+			if (board[x][y] == 1) (*whiteCount)++;
+			if (board[x][y] == 2) (*blackCount)++;
+		}
+	}
+};
+
