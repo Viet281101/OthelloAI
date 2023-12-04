@@ -46,6 +46,25 @@ bool isValidMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player) {
 *@param (flag) make the move on the board
 */
 void makeMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player) {
+	board[x][y] = player;
 
+	for (int dx = -1; dx <= 1; dx++) {
+		for (int dy = -1; dy <= 1; dy++) {
+			if (dx == 0 && dy == 0) continue;
+
+			if (checkDirection(board, x, y, dx, dy, player)) {
+				int opponent = player == 1 ? 2 : 1;
+
+				int i = x + dx;
+				int j = y + dy;
+
+				while (board[i][j] == opponent) {
+					board[i][j] = player;
+					i += dx;
+					j += dy;
+				}
+			}
+		}
+	}
 };
 

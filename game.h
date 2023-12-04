@@ -19,5 +19,6 @@
 void drawStableCorners();
 void drawPiece(int x, int y, int player);
 
+//// move.c
 bool isValidMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player);
 void makeMove(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int player);
