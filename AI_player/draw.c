@@ -132,7 +132,6 @@ void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer, int board
 	sprintf(whiteScore, "%d", whiteCount);
 	sprintf(blackScore, "%d", blackCount);
 	if (isGameOver(board)) {
-		glColor3f(200.0, 0.0, 0.0);
 		if (whiteCount > blackCount) {
 			sprintf(currentPlayerText, "GAME OVER ! %s wins!", player1);
 		} else if (whiteCount < blackCount) {
@@ -148,7 +147,7 @@ void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer, int board
 		}
 	}
 
-	glColor3f(0.0, 40.0, 200.0);
+	glColor3f(0.0, 40.0, 200.0); // Blue color for the score board text
 	drawText("White", 5, 10, 580);
 	drawText(whiteScore, strlen(whiteScore), 10, 560);
 	drawText("Black", 5, 10, 520);

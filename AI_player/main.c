@@ -97,6 +97,10 @@ void mouseClick(int button, int state, int x, int y) {
 				//// Place the piece on the board
 				makeMove(board, cellX, cellY, currentPlayer);
 
+				if (isGameOver(board)) {
+					printf("!!!! GAME OVER !!!!!!\n");
+				}
+
 				//// Change the player
 				currentPlayer = (currentPlayer == 1) ? 2 : 1;
 			}
