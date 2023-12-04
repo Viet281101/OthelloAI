@@ -39,3 +39,8 @@ Pour savoir comment jouer l'Othello, cliquer sur l'image suivant:
     ./othello
     ```
 
+## Nettoyer :
+- Nettoyez les fichiers avec make:
+  ```
+  make clean
+  ```
