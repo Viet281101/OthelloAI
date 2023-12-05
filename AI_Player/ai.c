@@ -4,6 +4,15 @@
 #include "alphabeta.h"
 
 
+int copyBoard(int board[BOARD_SIZE][BOARD_SIZE], int newBoard[BOARD_SIZE][BOARD_SIZE]) {
+    for (int x = 0; x < BOARD_SIZE; x++) {
+        memcpy(newBoard[x], board[x], BOARD_SIZE * sizeof(int));
+    }
+
+    return 0;
+};
+
+
 int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE], int player) {
     int opponent = (player == 1) ? 2 : 1;
     int score = 0;

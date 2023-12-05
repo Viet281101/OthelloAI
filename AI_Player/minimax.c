@@ -2,6 +2,9 @@
 #include "minimax.h"
 
 
+/*
+*@param (flag) minimax algorithm
+*/
 int minimax(int board[BOARD_SIZE][BOARD_SIZE], int player, int depth, int alpha, int beta) {
     if (depth == 0) {
         return evaluateBoard(board, player);

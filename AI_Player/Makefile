@@ -6,7 +6,7 @@ MACHINE= $(shell uname -s)
 #declaration des options du compilateur
 #PG_FLAGS = -DOPENGL_1_5
 
-ifeq ($(MACHINE), Darwin)
+ifeq ($(MACHINE), Viet)
 GL_LDFLAGS = -framework OpenGL -framework GLUT -framework Cocoa
 else
 GL_LDFLAGS = -lGL -lglut -lGLU

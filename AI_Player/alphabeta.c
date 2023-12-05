@@ -2,15 +2,9 @@
 #include "alphabeta.h"
 
 
-
-int copyBoard(int board[BOARD_SIZE][BOARD_SIZE], int newBoard[BOARD_SIZE][BOARD_SIZE]) {
-    for (int x = 0; x < BOARD_SIZE; x++) {
-        memcpy(newBoard[x], board[x], BOARD_SIZE * sizeof(int));
-    }
-};
-
-
-
+/*
+*@param (flag) alphabeta algorithm
+*/
 int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int player, int depth, int alpha, int beta) {
     if (depth == 0) {
         return evaluateBoard(board, player);
