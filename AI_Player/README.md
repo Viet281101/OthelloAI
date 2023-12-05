@@ -1,6 +1,8 @@
 
 # Othello pour 1 jouers avec IA
 
+Implémenter algorithme de Minimax, puis un élagage Alpha-beta
+
 ## Compilation
 
 ### Prérequis :
