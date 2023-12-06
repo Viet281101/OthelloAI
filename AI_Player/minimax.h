@@ -4,6 +4,6 @@
 
 #include "game.h"
 
-int minimax(int board[BOARD_SIZE][BOARD_SIZE], int player, int depth, int alpha, int beta);
+int minimax(int board[BOARD_SIZE][BOARD_SIZE], int player, int depth);
 
 #endif

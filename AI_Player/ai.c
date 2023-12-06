@@ -89,8 +89,8 @@ void testAI () {
 	int board[BOARD_SIZE][BOARD_SIZE] = {
 		{ 0, 0, 0, 0, 0, 0, 0, 0 }, // 0
 		{ 0, 0, 0, 0, 0, 0, 0, 0 }, // 1
-		{ 0, 0, 0, 0, 0, 0, 0, 0 }, // 2
-		{ 0, 0, 0, 1, 2, 0, 0, 0 }, // 3
+		{ 0, 0, 0, 0, 1, 0, 0, 0 }, // 2
+		{ 0, 0, 0, 1, 1, 0, 0, 0 }, // 3
 		{ 0, 0, 0, 2, 1, 0, 0, 0 }, // 4
 		{ 0, 0, 0, 0, 0, 0, 0, 0 }, // 5
 		{ 0, 0, 0, 0, 0, 0, 0, 0 }, // 6
@@ -102,10 +102,54 @@ void testAI () {
 	int alpha = -1000000;
 	int beta = 1000000;
 
-	int minimaxScore = minimax(board, player, depth, alpha, beta);
-	int alphabetaScore = alphabeta(board, player, depth, alpha, beta);
-
+	int minimaxScore = minimax(board, player, depth);
 	printf("Minimax score: %d\n", minimaxScore);
+
+	int alphabetaScore = alphabeta(board, player, depth, alpha, beta);
 	printf("Alphabeta score: %d\n", alphabetaScore);
+	
+	printf("\n");
+};
+
+
+/*
+*@param (flag) get the best move for the AI
+*/
+int getBestMove(int board[BOARD_SIZE][BOARD_SIZE], int player, int *bestX, int *bestY) {
+	int opponent = (player == 1) ? 2 : 1;
+	int bestScore = -1000000;
+
+	int moves[BOARD_SIZE * BOARD_SIZE][2];
+	int movesCount = 0;
+
+	for (int x = 0; x < BOARD_SIZE; x++) {
+		for (int y = 0; y < BOARD_SIZE; y++) {
+			if (isValidMove(board, x, y, player)) {
+				moves[movesCount][0] = x;
+				moves[movesCount][1] = y;
+				movesCount++;
+			}
+		}
+	}
+
+	for (int i = 0; i < movesCount; i++) {
+		int x = moves[i][0];
+		int y = moves[i][1];
+
+		int newBoard[BOARD_SIZE][BOARD_SIZE];
+		memcpy(newBoard, board, sizeof(newBoard));
+
+		makeMove(newBoard, x, y, player);
+
+		int score = -minimax(newBoard, opponent, 3);
+
+		if (score > bestScore) {
+			bestScore = score;
+			*bestX = x;
+			*bestY = y;
+		}
+	}
+
+	return 0;
 };
 

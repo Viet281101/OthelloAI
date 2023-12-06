@@ -3,45 +3,47 @@
 
 
 /*
-*@param (flag) minimax algorithm
+*@param (flag) minimax algorithm wihout alpha-beta pruning
 */
-int minimax(int board[BOARD_SIZE][BOARD_SIZE], int player, int depth, int alpha, int beta) {
-	if (depth == 0) {
+int minimax(int board[BOARD_SIZE][BOARD_SIZE], int player, int depth) {
+	int opponent = (player == 1) ? 2 : 1;
+
+	if (depth == 0 || isGameOver(board)) {
 		return evaluateBoard(board, player);
 	}
 
-	int opponent = (player == 1) ? 2 : 1;
-	int bestScore = (player == 1) ? -1000000 : 1000000;
+	int moves[BOARD_SIZE * BOARD_SIZE][2];
+	int movesCount = 0;
 
 	for (int x = 0; x < BOARD_SIZE; x++) {
 		for (int y = 0; y < BOARD_SIZE; y++) {
 			if (isValidMove(board, x, y, player)) {
-				int newBoard[BOARD_SIZE][BOARD_SIZE];
-				copyBoard(board, newBoard);
-				makeMove(newBoard, x, y, player);
-
-				int score = minimax(newBoard, opponent, depth - 1, alpha, beta);
-
-				if (player == 1) {
-					if (score > bestScore) {
-						bestScore = score;
-					}
-					if (score > alpha) {
-						alpha = score;
-					}
-				} else {
-					if (score < bestScore) {
-						bestScore = score;
-					}
-					if (score < beta) {
-						beta = score;
-					}
-				}
-
-				if (alpha >= beta) {
-					return bestScore;
-				}
+				moves[movesCount][0] = x;
+				moves[movesCount][1] = y;
+				movesCount++;
 			}
+		}
+	}
+
+	if (movesCount == 0) {
+		return evaluateBoard(board, player);
+	}
+
+	int bestScore = -1000000;
+
+	for (int i = 0; i < movesCount; i++) {
+		int x = moves[i][0];
+		int y = moves[i][1];
+
+		int newBoard[BOARD_SIZE][BOARD_SIZE];
+		memcpy(newBoard, board, sizeof(newBoard));
+
+		makeMove(newBoard, x, y, player);
+
+		int score = -minimax(newBoard, opponent, depth - 1);
+
+		if (score > bestScore) {
+			bestScore = score;
 		}
 	}
 
