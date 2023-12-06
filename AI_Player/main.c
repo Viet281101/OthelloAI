@@ -53,16 +53,16 @@ void displayMenu() {
 
 	//// Draw the menu title
 	glColor3f(1.0, 1.0, 1.0);
-	glRasterPos2f(100, 400);
-	for (const char* c = "Othello Game with AI Minimax"; *c != '\0'; c++) {
+	glRasterPos2f(100, 500);
+	for (const char* c = "Play Othello Game with AI Minimax"; *c != '\0'; c++) {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
 	}
 
 	//// Draw the first button
-	drawButton("Wihout Alpha-Beta", BUTTON_X, MINIMAX_BUTTON_Y);
+	drawButton("With Alpha-Beta", BUTTON_X, MINIMAX_BUTTON_Y + 100);
 
 	//// Draw the second button
-	drawButton("With Alpha-Beta", BUTTON_X, ALPHABETA_BUTTON_Y);
+	drawButton("Without Alpha-Beta", BUTTON_X, ALPHABETA_BUTTON_Y + 100);
 };
 
 
@@ -105,8 +105,6 @@ void displayGame() {
 		countPieces(board, &whiteCount, &blackCount);
 		drawScoreBoard(whiteCount, blackCount, currentPlayer, board);
 		checkTurnCountPieces(whiteCount, blackCount);
-
-		glFlush();
 	}
 };
 
@@ -134,7 +132,7 @@ void mouseClick(int button, int state, int x, int y) {
 		if (x >= BUTTON_X && x <= BUTTON_X + BUTTON_WIDTH && y >= MINIMAX_BUTTON_Y && y <= MINIMAX_BUTTON_Y + BUTTON_HEIGHT) {
 			inMenu = false;
 			withAlphaBeta = false;
-			printf("You choose to play with AI Minimax\n");
+			printf("You choose to play with AI Minimax\n\n");
 			initBoard();
 			glutPostRedisplay();
 		}
@@ -143,7 +141,7 @@ void mouseClick(int button, int state, int x, int y) {
 		if (x >= BUTTON_X && x <= BUTTON_X + BUTTON_WIDTH && y >= ALPHABETA_BUTTON_Y && y <= ALPHABETA_BUTTON_Y + BUTTON_HEIGHT) {
 			inMenu = false;
 			withAlphaBeta = true;
-			printf("You choose to play with AI Minimax with alpha-beta pruning\n");
+			printf("You choose to play with AI Minimax with Alpha-Beta Pruning\n\n");
 			initBoard();
 			glutPostRedisplay();
 		}

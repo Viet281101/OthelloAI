@@ -18,7 +18,12 @@ Pour savoir comment jouer l'Othello, cliquer sur l'image suivant:
     ```
     sudo apt-get install libglut3-dev
     ```
-  
+
+- Cloner le projet de [mon GitHub](https://github.com/Viet281101/OthelloAI) sur votre ordinateur:
+  ```
+  git clone https://github.com/Viet281101/OthelloAI.git
+  ```
+
 ### Pour compiler le jeu :
 - Aller dans la répertoire du projet "AI_Player" ou "Human_Player"
     ```
