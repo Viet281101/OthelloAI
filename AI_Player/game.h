@@ -17,6 +17,14 @@
 #define CELL_SIZE 80
 #define DEG2RAD (3.14159/180.0)
 
+#define WINDOW_WIDTH (BOARD_SIZE * CELL_SIZE)
+#define WINDOW_HEIGHT (BOARD_SIZE * CELL_SIZE)
+#define BUTTON_WIDTH 200
+#define BUTTON_HEIGHT 50
+#define BUTTON_X (WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2)
+#define MINIMAX_BUTTON_Y 200
+#define ALPHABETA_BUTTON_Y 300
+
 #ifndef GAME_H
 #define GAME_H
 
@@ -29,6 +37,7 @@ void drawStableCorners();
 void drawPiece(int x, int y, int player);
 void drawHintCircle(int x, int y, int player);
 void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer, int board[BOARD_SIZE][BOARD_SIZE]);
+void drawButton(char *text, int x, int y);
 
 
 ////////////////////////

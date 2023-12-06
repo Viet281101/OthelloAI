@@ -3,6 +3,10 @@
 #include "minimax.h"
 #include "alphabeta.h"
 
+
+bool inMenu = true;
+bool withAlphaBeta = false;
+
 int board[BOARD_SIZE][BOARD_SIZE];
 int currentPlayer = 1; //// 1 = white, 2 = black
 
@@ -42,52 +46,108 @@ void checkTurnCountPieces(int whiteCount, int blackCount) {
 };
 
 /*
-*@param (flag) the current board state to be displayed
+* @param (flag) display the menu with 2 options: 1. Play with AI Minimax, 2. Play with AI Minimax with alpha-beta pruning
 */
-void display() {
+void displayMenu() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	//// Draw the Othello board
-	drawBoard();
-
-	//// Draw the grid lines
-	drawGridLines();
-
-	//// Draw the stable corners
-	drawStableCorners();
-
-	//// Draw the pieces
-	for (int x = 0; x < BOARD_SIZE; x++) {
-		for (int y = 0; y < BOARD_SIZE; y++) {
-			if (board[x][y] != 0) {
-				drawPiece(x, y, board[x][y]);
-			}
-		}
+	//// Draw the menu title
+	glColor3f(1.0, 1.0, 1.0);
+	glRasterPos2f(100, 400);
+	for (const char* c = "Othello Game with AI Minimax"; *c != '\0'; c++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
 	}
 
-	//// Draw the hint circle
-	for (int x = 0; x < BOARD_SIZE; x++) {
-		for (int y = 0; y < BOARD_SIZE; y++) {
-			if (board[x][y] == 0 && isValidMove(board, x, y, currentPlayer)) {
-				drawHintCircle(x, y, currentPlayer);
+	//// Draw the first button
+	drawButton("Wihout Alpha-Beta", BUTTON_X, MINIMAX_BUTTON_Y);
+
+	//// Draw the second button
+	drawButton("With Alpha-Beta", BUTTON_X, ALPHABETA_BUTTON_Y);
+};
+
+
+/*
+*@param (flag) the current board state to be displayed
+*/
+void displayGame() {
+	if (!inMenu) {
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		//// Draw the Othello board
+		drawBoard();
+
+		//// Draw the grid lines
+		drawGridLines();
+
+		//// Draw the stable corners
+		drawStableCorners();
+
+		//// Draw the pieces
+		for (int x = 0; x < BOARD_SIZE; x++) {
+			for (int y = 0; y < BOARD_SIZE; y++) {
+				if (board[x][y] != 0) {
+					drawPiece(x, y, board[x][y]);
+				}
 			}
 		}
+
+		//// Draw the hint circle
+		for (int x = 0; x < BOARD_SIZE; x++) {
+			for (int y = 0; y < BOARD_SIZE; y++) {
+				if (board[x][y] == 0 && isValidMove(board, x, y, currentPlayer)) {
+					drawHintCircle(x, y, currentPlayer);
+				}
+			}
+		}
+
+		//// Draw the score board
+		int whiteCount, blackCount;
+		countPieces(board, &whiteCount, &blackCount);
+		drawScoreBoard(whiteCount, blackCount, currentPlayer, board);
+		checkTurnCountPieces(whiteCount, blackCount);
+
+		glFlush();
 	}
+};
 
-	//// Draw the score board
-	int whiteCount, blackCount;
-	countPieces(board, &whiteCount, &blackCount);
-	drawScoreBoard(whiteCount, blackCount, currentPlayer, board);
-	checkTurnCountPieces(whiteCount, blackCount);
 
+/*
+*@param (flag) display the menu or the game
+*/
+void display() {
+	if (inMenu) {
+		displayMenu();
+	} else {
+		displayGame();
+	}
 	glFlush();
 };
+
 
 /*
 *@param (flag) handle the mouse click event
 */
 void mouseClick(int button, int state, int x, int y) {
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+	//// Check if the mouse click is inside the menu
+	if (inMenu && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+		//// Check if the mouse click is inside the first button
+		if (x >= BUTTON_X && x <= BUTTON_X + BUTTON_WIDTH && y >= MINIMAX_BUTTON_Y && y <= MINIMAX_BUTTON_Y + BUTTON_HEIGHT) {
+			inMenu = false;
+			withAlphaBeta = false;
+			printf("You choose to play with AI Minimax\n");
+			initBoard();
+			glutPostRedisplay();
+		}
+
+		//// Check if the mouse click is inside the second button
+		if (x >= BUTTON_X && x <= BUTTON_X + BUTTON_WIDTH && y >= ALPHABETA_BUTTON_Y && y <= ALPHABETA_BUTTON_Y + BUTTON_HEIGHT) {
+			inMenu = false;
+			withAlphaBeta = true;
+			printf("You choose to play with AI Minimax with alpha-beta pruning\n");
+			initBoard();
+			glutPostRedisplay();
+		}
+	} else if (!inMenu && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		//// Get the cell position
 		int cellX = x / CELL_SIZE;
 		int cellY = y / CELL_SIZE;
@@ -108,8 +168,12 @@ void mouseClick(int button, int state, int x, int y) {
 
 					//// Get the best move for the AI player
 					int bestMove[2];
-					// findBestMoveMinimax(board, currentPlayer, 5, bestMove);
-					findBestMoveAlphaBeta(board, currentPlayer, 5, bestMove);
+					
+					if (withAlphaBeta) {
+						findBestMoveAlphaBeta(board, currentPlayer, 5, bestMove);
+					} else {
+						findBestMoveMinimax(board, currentPlayer, 5, bestMove);
+					}
 
 					//// Place the piece on the board
 					if (board[bestMove[0]][bestMove[1]] == 0) {
@@ -138,7 +202,6 @@ void init() {
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glMatrixMode(GL_PROJECTION);
 	gluOrtho2D(0.0, BOARD_SIZE * CELL_SIZE, 0.0, BOARD_SIZE * CELL_SIZE);
-	initBoard();
 };
 
 

@@ -155,3 +155,23 @@ void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer, int board
 	drawText(currentPlayerText, strlen(currentPlayerText), 10, 460);
 };
 
+
+/*
+*@param (flag) draw the button for menu
+*/
+void drawButton(char *text, int x, int y) {
+	glColor3f(0.5, 0.5, 0.5);
+	glBegin(GL_QUADS);
+	glVertex2f(x, y);
+	glVertex2f(x + BUTTON_WIDTH, y);
+	glVertex2f(x + BUTTON_WIDTH, y + BUTTON_HEIGHT);
+	glVertex2f(x, y + BUTTON_HEIGHT);
+	glEnd();
+
+	glColor3f(1.0, 1.0, 1.0);
+	glRasterPos2f(x + 10, y + BUTTON_HEIGHT / 2);
+	for (const char* c = text; *c != '\0'; c++) {
+		glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *c);
+	}
+};
+
