@@ -25,7 +25,9 @@ void initBoard() {
 	board[mid][mid-1] = 2;
 };
 
-
+/*
+*@param (flag) print stats of the game
+*/
 void checkTurnCountPieces(int whiteCount, int blackCount) {
 	printf("White: %d, Black: %d\n", whiteCount, blackCount);
 	if (isGameOver(board)) {
@@ -64,7 +66,6 @@ void displayMenu() {
 	//// Draw the second button
 	drawButton("Without Alpha-Beta", BUTTON_X, ALPHABETA_BUTTON_Y + 100);
 };
-
 
 /*
 *@param (flag) the current board state to be displayed
@@ -108,6 +109,90 @@ void displayGame() {
 	}
 };
 
+/*
+*@param (flag) handle the mouse click event in the menu
+*/
+void mouseClickMenu(int button, int state, int x, int y) {
+	//// Check if the mouse click is inside the first button
+	if (x >= BUTTON_X && x <= BUTTON_X + BUTTON_WIDTH && y >= MINIMAX_BUTTON_Y && y <= MINIMAX_BUTTON_Y + BUTTON_HEIGHT) {
+		inMenu = false;
+		withAlphaBeta = false;
+		printf("You choose to play with AI Minimax\n\n");
+		initBoard();
+		glutPostRedisplay();
+	}
+
+	//// Check if the mouse click is inside the second button
+	if (x >= BUTTON_X && x <= BUTTON_X + BUTTON_WIDTH && y >= ALPHABETA_BUTTON_Y && y <= ALPHABETA_BUTTON_Y + BUTTON_HEIGHT) {
+		inMenu = false;
+		withAlphaBeta = true;
+		printf("You choose to play with AI Minimax with Alpha-Beta Pruning\n\n");
+		initBoard();
+		glutPostRedisplay();
+	}
+};
+
+/*
+*@param (flag) handle the mouse click event in the board of game
+*/
+void mouseClickGame(int button, int state, int x, int y) {
+	//// Get the cell position
+	int cellX = x / CELL_SIZE;
+	int cellY = y / CELL_SIZE;
+
+	//// Check if the cell is empty
+	if (board[cellX][cellY] == 0) {
+		//// Check if the move is valid
+		if (isValidMove(board, cellX, cellY, currentPlayer)) {
+			//// Place the piece on the board
+			if (board[cellX][cellY] == 0) makeMove(board, cellX, cellY, currentPlayer);
+
+			if (isGameOver(board)) {
+				printf("!!!! GAME OVER !!!!!!\n");
+			} else {
+				currentPlayer = 2; //// Switch to AI player
+
+				//// Get the best move for the AI player
+				int bestMove[2];
+				int depth = 5;
+				
+				clock_t start, end;
+				double cpu_time_used;
+				start = clock();
+
+				if (withAlphaBeta) {
+					findBestMoveAlphaBeta(board, currentPlayer, depth, bestMove);
+					
+					end = clock();
+					cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+					printf("Minimax with Alpha-Beta Pruning took %f seconds to execute \n", cpu_time_used);
+				} else {
+					findBestMoveMinimax(board, currentPlayer, depth, bestMove);
+					
+					end = clock();
+					cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+					printf("Minimax took %f seconds to execute \n", cpu_time_used);
+				}
+
+				//// Place the piece on the board
+				if (board[bestMove[0]][bestMove[1]] == 0) {
+					makeMove(board, bestMove[0], bestMove[1], currentPlayer);
+				}
+
+				if (isGameOver(board)) {
+					printf("!!!! GAME OVER !!!!!!\n");
+				} else {
+					currentPlayer = 1; //// Switch to human player
+				}
+
+				glutPostRedisplay();
+			}
+		}
+	}
+
+	//// Redraw the scene
+	glutPostRedisplay();
+};
 
 /*
 *@param (flag) display the menu or the game
@@ -121,81 +206,21 @@ void display() {
 	glFlush();
 };
 
-
 /*
 *@param (flag) handle the mouse click event
 */
 void mouseClick(int button, int state, int x, int y) {
 	//// Check if the mouse click is inside the menu
 	if (inMenu && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-		//// Check if the mouse click is inside the first button
-		if (x >= BUTTON_X && x <= BUTTON_X + BUTTON_WIDTH && y >= MINIMAX_BUTTON_Y && y <= MINIMAX_BUTTON_Y + BUTTON_HEIGHT) {
-			inMenu = false;
-			withAlphaBeta = false;
-			printf("You choose to play with AI Minimax\n\n");
-			initBoard();
-			glutPostRedisplay();
-		}
-
-		//// Check if the mouse click is inside the second button
-		if (x >= BUTTON_X && x <= BUTTON_X + BUTTON_WIDTH && y >= ALPHABETA_BUTTON_Y && y <= ALPHABETA_BUTTON_Y + BUTTON_HEIGHT) {
-			inMenu = false;
-			withAlphaBeta = true;
-			printf("You choose to play with AI Minimax with Alpha-Beta Pruning\n\n");
-			initBoard();
-			glutPostRedisplay();
-		}
+		mouseClickMenu(button, state, x, y);
 	} else if (!inMenu && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-		//// Get the cell position
-		int cellX = x / CELL_SIZE;
-		int cellY = y / CELL_SIZE;
-
-		//// Check if the cell is empty
-		if (board[cellX][cellY] == 0) {
-			//// Check if the move is valid
-			if (isValidMove(board, cellX, cellY, currentPlayer)) {
-				//// Place the piece on the board
-				if (board[cellX][cellY] == 0) {
-					makeMove(board, cellX, cellY, currentPlayer);
-				}
-
-				if (isGameOver(board)) {
-					printf("!!!! GAME OVER !!!!!!\n");
-				} else {
-					currentPlayer = 2; //// Switch to AI player
-
-					//// Get the best move for the AI player
-					int bestMove[2];
-					
-					if (withAlphaBeta) {
-						findBestMoveAlphaBeta(board, currentPlayer, 5, bestMove);
-					} else {
-						findBestMoveMinimax(board, currentPlayer, 5, bestMove);
-					}
-
-					//// Place the piece on the board
-					if (board[bestMove[0]][bestMove[1]] == 0) {
-						makeMove(board, bestMove[0], bestMove[1], currentPlayer);
-					}
-
-					if (isGameOver(board)) {
-						printf("!!!! GAME OVER !!!!!!\n");
-					} else {
-						currentPlayer = 1; //// Switch to human player
-					}
-
-					//// Redraw the scene
-					glutPostRedisplay();
-				}
-			}
-		}
-
-		//// Redraw the scene
-		glutPostRedisplay();
+		mouseClickGame(button, state, x, y);
 	}
 };
 
-
+/*
+*@param (flag) initialize the game
+*/
 void init() {
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glMatrixMode(GL_PROJECTION);

@@ -13,6 +13,9 @@ int copyBoard(int board[BOARD_SIZE][BOARD_SIZE], int newBoard[BOARD_SIZE][BOARD_
 };
 
 
+/*
+*@param (flag) evaluate the board and return the score
+*/
 int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE], int player) {
 	int opponent = (player == 1) ? 2 : 1;
 	int score = 0;
@@ -84,7 +87,9 @@ int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE], int player) {
 	return score;
 };
 
-
+/*
+*@param (flag) test the algorithm minimax before implementing it to the game
+*/
 void testAI () {
 	int board[BOARD_SIZE][BOARD_SIZE] = {
 		{ 0, 0, 0, 0, 0, 0, 0, 0 }, // 0
@@ -102,11 +107,19 @@ void testAI () {
 	int alpha = -1000000;
 	int beta = 1000000;
 
+	clock_t start, end;
+	double cpu_time_used;
+	start = clock();
+
 	int minimaxScore = minimax(board, player, depth);
 	printf("Minimax score: %d\n", minimaxScore);
 
-	int alphabetaScore = alphabeta(board, player, depth, alpha, beta);
-	printf("Alphabeta score: %d\n", alphabetaScore);
+	// int alphabetaScore = alphabeta(board, player, depth, alpha, beta);
+	// printf("Alphabeta score: %d\n", alphabetaScore);
+
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+	printf("AI took %f seconds to execute \n", cpu_time_used);
 	
 	printf("\n");
 };

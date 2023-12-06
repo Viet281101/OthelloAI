@@ -1,7 +1,7 @@
 
 # IA pour le jeu d'Othello
 
-Un jeu d'Othello avec l'IA en utilse le langage C et openGL GLUT. Il existe 2 modes de jeu: jouer avec l'humain et jouer avec l'intelligence artificielle.
+Un jeu d'Othello avec l'IA en utilse le langage C et [OpenGL](https://github.com/McNopper/OpenGL) GLUT. Il existe 2 modes de jeu: jouer avec l'humain et jouer avec l'intelligence artificielle.
 
 Pour savoir comment jouer l'Othello, cliquer sur l'image suivant:
 
@@ -10,11 +10,15 @@ Pour savoir comment jouer l'Othello, cliquer sur l'image suivant:
 ## Compilation
 
 ### Prérequis :
-- Installer Make et Glut avec la commande:
+- Installer Make avec la commande:
     ```
     sudo apt-get install make
     ```
-  et
+- Et installer [GLUT](https://github.com/FreeGLUTProject/freeglut):
+    ```
+    sudo apt-get install freeglut3 freeglut3-dev
+    ```
+    ou
     ```
     sudo apt-get install libglut3-dev
     ```
