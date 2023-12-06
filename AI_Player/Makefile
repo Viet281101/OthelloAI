@@ -19,7 +19,7 @@ PROGNAME = othello
 HEADERS = game.h minimax.h alphabeta.h
 SOURCES = main.c move.c draw.c ai.c minimax.c alphabeta.c
 OBJ = $(SOURCES:.c=.o)
-DELPROG = compressed_image.rle
+DELPROG = GameLog/game_log.txt
 
 all: $(PROGNAME)
 

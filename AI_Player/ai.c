@@ -114,8 +114,8 @@ void testAI () {
 	int minimaxScore = minimax(board, player, depth);
 	printf("Minimax score: %d\n", minimaxScore);
 
-	// int alphabetaScore = alphabeta(board, player, depth, alpha, beta);
-	// printf("Alphabeta score: %d\n", alphabetaScore);
+	int alphabetaScore = alphabeta(board, player, depth, alpha, beta);
+	printf("Alphabeta score: %d\n", alphabetaScore);
 
 	end = clock();
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;

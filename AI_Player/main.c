@@ -3,7 +3,7 @@
 #include "minimax.h"
 #include "alphabeta.h"
 
-
+FILE *logFile;
 bool inMenu = true;
 bool withAlphaBeta = false;
 
@@ -26,23 +26,50 @@ void initBoard() {
 };
 
 /*
+*@param (flag) draw the board inside game log
+*/
+void logBoardState(FILE *logFile, int board[BOARD_SIZE][BOARD_SIZE]) {
+    fprintf(logFile, "    A   B   C   D   E   F   G   H \n");
+    fprintf(logFile, "  +---+---+---+---+---+---+---+---+\n");
+    for (int y = 0; y < BOARD_SIZE; y++) {
+        fprintf(logFile, "%d ", y + 1);
+        for (int x = 0; x < BOARD_SIZE; x++) {
+            char piece = ' ';
+            if (board[x][y] == 1) piece = 'W'; // white
+            else if (board[x][y] == 2) piece = 'B'; // black
+            fprintf(logFile, "| %c ", piece);
+        }
+        fprintf(logFile, "| %d\n", y + 1);
+        fprintf(logFile, "  +---+---+---+---+---+---+---+---+\n");
+    }
+    fprintf(logFile, "    A   B   C   D   E   F   G   H \n\n");
+};
+
+/*
 *@param (flag) print stats of the game
 */
 void checkTurnCountPieces(int whiteCount, int blackCount) {
 	printf("White: %d, Black: %d\n", whiteCount, blackCount);
+	fprintf(logFile, "White: %d, Black: %d\n", whiteCount, blackCount);
 	if (isGameOver(board)) {
 		if (whiteCount > blackCount) {
 			printf("GAME OVER ! You wins!\n");
+			fprintf(logFile, "GAME OVER ! You wins!\n");
 		} else if (whiteCount < blackCount) {
 			printf("GAME OVER ! AI wins!\n");
+			fprintf(logFile, "GAME OVER ! AI wins!\n");
 		} else {
 			printf("GAME OVER ! Draw!\n");
+			fprintf(logFile, "GAME OVER ! Draw!\n");
 		}
+		logBoardState(logFile, board);
 	} else {
 		if (currentPlayer == 1) {
 			printf("Your's turn\n\n");
+			fprintf(logFile, "Your's turn\n\n");
 		} else if (currentPlayer == 2) {
 			printf("AI's turn\n\n");
+			fprintf(logFile, "AI's turn\n\n");
 		}
 	}
 };
@@ -118,6 +145,7 @@ void mouseClickMenu(int button, int state, int x, int y) {
 		inMenu = false;
 		withAlphaBeta = false;
 		printf("You choose to play with AI Minimax\n\n");
+		fprintf(logFile, "You choose to play with AI Minimax\n\n");
 		initBoard();
 		glutPostRedisplay();
 	}
@@ -127,6 +155,7 @@ void mouseClickMenu(int button, int state, int x, int y) {
 		inMenu = false;
 		withAlphaBeta = true;
 		printf("You choose to play with AI Minimax with Alpha-Beta Pruning\n\n");
+		fprintf(logFile, "You choose to play with AI Minimax with Alpha-Beta Pruning\n\n");
 		initBoard();
 		glutPostRedisplay();
 	}
@@ -166,12 +195,14 @@ void mouseClickGame(int button, int state, int x, int y) {
 					end = clock();
 					cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 					printf("Minimax with Alpha-Beta Pruning took %f seconds to execute \n", cpu_time_used);
+					fprintf(logFile, "Minimax with Alpha-Beta Pruning took %f seconds to execute \n", cpu_time_used);
 				} else {
 					findBestMoveMinimax(board, currentPlayer, depth, bestMove);
 					
 					end = clock();
 					cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 					printf("Minimax took %f seconds to execute \n", cpu_time_used);
+					fprintf(logFile, "Minimax took %f seconds to execute \n", cpu_time_used);
 				}
 
 				//// Place the piece on the board
@@ -184,6 +215,8 @@ void mouseClickGame(int button, int state, int x, int y) {
 				} else {
 					currentPlayer = 1; //// Switch to human player
 				}
+
+				logBoardState(logFile, board);
 
 				glutPostRedisplay();
 			}
@@ -230,6 +263,12 @@ void init() {
 
 int main(int argc, char** argv) {
 	// testAI();
+	logFile = fopen("GameLog/game_log.txt", "w");
+	if (logFile == NULL) {
+		printf("Error opening file!\n");
+		perror("Error opening file!\n");
+		exit(EXIT_FAILURE);
+	}
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(BOARD_SIZE * CELL_SIZE, BOARD_SIZE * CELL_SIZE);
@@ -239,5 +278,6 @@ int main(int argc, char** argv) {
 	glutMouseFunc(mouseClick);
 	glutDisplayFunc(display);
 	glutMainLoop();
+	fclose(logFile);
 	return 0;
 };
