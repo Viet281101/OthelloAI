@@ -82,5 +82,30 @@ int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE], int player) {
 	}
 
 	return score;
-
 };
+
+
+void testAI () {
+	int board[BOARD_SIZE][BOARD_SIZE] = {
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }, // 0
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }, // 1
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }, // 2
+		{ 0, 0, 0, 1, 2, 0, 0, 0 }, // 3
+		{ 0, 0, 0, 2, 1, 0, 0, 0 }, // 4
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }, // 5
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }, // 6
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }  // 7
+	};
+
+	int player = 1;
+	int depth = 5;
+	int alpha = -1000000;
+	int beta = 1000000;
+
+	int minimaxScore = minimax(board, player, depth, alpha, beta);
+	int alphabetaScore = alphabeta(board, player, depth, alpha, beta);
+
+	printf("Minimax score: %d\n", minimaxScore);
+	printf("Alphabeta score: %d\n", alphabetaScore);
+};
+

@@ -45,6 +45,6 @@ bool isGameOver(int board[BOARD_SIZE][BOARD_SIZE]);
 
 int copyBoard(int board[BOARD_SIZE][BOARD_SIZE], int newBoard[BOARD_SIZE][BOARD_SIZE]);
 int evaluateBoard(int board[BOARD_SIZE][BOARD_SIZE], int player);
-
+void testAI();
 
 #endif
