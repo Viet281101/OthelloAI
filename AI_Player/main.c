@@ -1,5 +1,7 @@
 
 #include "game.h"
+#include "minimax.h"
+#include "alphabeta.h"
 
 int board[BOARD_SIZE][BOARD_SIZE];
 int currentPlayer = 1; //// 1 = white, 2 = black
@@ -24,17 +26,17 @@ void checkTurnCountPieces(int whiteCount, int blackCount) {
 	printf("White: %d, Black: %d\n", whiteCount, blackCount);
 	if (isGameOver(board)) {
 		if (whiteCount > blackCount) {
-			printf("GAME OVER ! White wins!\n");
+			printf("GAME OVER ! You wins!\n");
 		} else if (whiteCount < blackCount) {
-			printf("GAME OVER ! Black wins!\n");
+			printf("GAME OVER ! AI wins!\n");
 		} else {
 			printf("GAME OVER ! Draw!\n");
 		}
 	} else {
 		if (currentPlayer == 1) {
-			printf("White's turn\n\n");
+			printf("Your's turn\n\n");
 		} else if (currentPlayer == 2) {
-			printf("Black's turn\n\n");
+			printf("AI's turn\n\n");
 		}
 	}
 };
@@ -95,14 +97,34 @@ void mouseClick(int button, int state, int x, int y) {
 			//// Check if the move is valid
 			if (isValidMove(board, cellX, cellY, currentPlayer)) {
 				//// Place the piece on the board
-				makeMove(board, cellX, cellY, currentPlayer);
+				if (board[cellX][cellY] == 0) {
+					makeMove(board, cellX, cellY, currentPlayer);
+				}
 
 				if (isGameOver(board)) {
 					printf("!!!! GAME OVER !!!!!!\n");
-				}
+				} else {
+					currentPlayer = 2; //// Switch to AI player
 
-				//// Change the player
-				currentPlayer = (currentPlayer == 1) ? 2 : 1;
+					//// Get the best move for the AI player
+					int bestMove[2];
+					// findBestMoveMinimax(board, currentPlayer, 5, bestMove);
+					findBestMoveAlphaBeta(board, currentPlayer, 5, bestMove);
+
+					//// Place the piece on the board
+					if (board[bestMove[0]][bestMove[1]] == 0) {
+						makeMove(board, bestMove[0], bestMove[1], currentPlayer);
+					}
+
+					if (isGameOver(board)) {
+						printf("!!!! GAME OVER !!!!!!\n");
+					} else {
+						currentPlayer = 1; //// Switch to human player
+					}
+
+					//// Redraw the scene
+					glutPostRedisplay();
+				}
 			}
 		}
 
@@ -121,7 +143,7 @@ void init() {
 
 
 int main(int argc, char** argv) {
-	testAI();
+	// testAI();
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(BOARD_SIZE * CELL_SIZE, BOARD_SIZE * CELL_SIZE);

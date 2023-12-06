@@ -126,8 +126,8 @@ void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer, int board
 	char *whiteScore = malloc(sizeof(char) * 10);
 	char *blackScore = malloc(sizeof(char) * 10);
 	char *currentPlayerText = malloc(sizeof(char) * 10);
-	char *player1 = "White";
-	char *player2 = "Black";
+	char *player1 = "You";
+	char *player2 = "AI";
 
 	sprintf(whiteScore, "%d", whiteCount);
 	sprintf(blackScore, "%d", blackCount);
@@ -141,7 +141,7 @@ void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer, int board
 		}
 	} else {
 		if (currentPlayer == 1) {
-			sprintf(currentPlayerText, "%s's turn", player1);
+			sprintf(currentPlayerText, "%sr's turn", player1);
 		} else if (currentPlayer == 2) {
 			sprintf(currentPlayerText, "%s's turn", player2);
 		}
