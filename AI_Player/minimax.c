@@ -8,10 +8,12 @@
 int minimax(int board[BOARD_SIZE][BOARD_SIZE], int player, int depth) {
 	int opponent = (player == 1) ? 2 : 1;
 
+	//// Check if the game is over
 	if (depth == 0 || isGameOver(board)) {
 		return evaluateBoard(board, player);
 	}
 
+	//// Find all possible moves
 	int moves[BOARD_SIZE * BOARD_SIZE][2];
 	int movesCount = 0;
 
@@ -25,10 +27,12 @@ int minimax(int board[BOARD_SIZE][BOARD_SIZE], int player, int depth) {
 		}
 	}
 
+	//// If there are no possible moves
 	if (movesCount == 0) {
 		return evaluateBoard(board, player);
 	}
 
+	//// Find the best possible move
 	int bestScore = -1000000;
 
 	for (int i = 0; i < movesCount; i++) {
@@ -61,6 +65,7 @@ void findBestMoveMinimax(int board[BOARD_SIZE][BOARD_SIZE], int player, int dept
 	int moves[BOARD_SIZE * BOARD_SIZE][2];
 	int movesCount = 0;
 
+	//// Find all possible moves
 	for (int x = 0; x < BOARD_SIZE; x++) {
 		for (int y = 0; y < BOARD_SIZE; y++) {
 			if (isValidMove(board, x, y, player)) {
@@ -71,6 +76,7 @@ void findBestMoveMinimax(int board[BOARD_SIZE][BOARD_SIZE], int player, int dept
 		}
 	}
 
+	//// Make the best possible move
 	for (int i = 0; i < movesCount; i++) {
 		int x = moves[i][0];
 		int y = moves[i][1];

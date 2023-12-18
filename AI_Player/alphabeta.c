@@ -46,6 +46,7 @@ int alphabeta(int board[BOARD_SIZE][BOARD_SIZE], int player, int depth, int alph
 			bestScore = score;
 		}
 
+		//// Alpha-beta pruning
 		if (score > alpha) {
 			alpha = score;
 		}
@@ -69,6 +70,7 @@ void findBestMoveAlphaBeta(int board[BOARD_SIZE][BOARD_SIZE], int player, int de
 	int moves[BOARD_SIZE * BOARD_SIZE][2];
 	int movesCount = 0;
 
+	//// Get all valid moves
 	for (int x = 0; x < BOARD_SIZE; x++) {
 		for (int y = 0; y < BOARD_SIZE; y++) {
 			if (isValidMove(board, x, y, player)) {
@@ -79,6 +81,7 @@ void findBestMoveAlphaBeta(int board[BOARD_SIZE][BOARD_SIZE], int player, int de
 		}
 	}
 
+	//// Make the best move for the AI
 	for (int i = 0; i < movesCount; i++) {
 		int x = moves[i][0];
 		int y = moves[i][1];
