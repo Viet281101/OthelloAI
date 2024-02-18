@@ -122,37 +122,58 @@ void drawText(char *text, int length, int x, int y) {
 /*
 *@param (flag) draw the Othello score board
 */
-void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer, int board[BOARD_SIZE][BOARD_SIZE]) {
-	char *whiteScore = malloc(sizeof(char) * 10);
-	char *blackScore = malloc(sizeof(char) * 10);
-	char *currentPlayerText = malloc(sizeof(char) * 10);
-	char *player1 = "You";
-	char *player2 = "AI";
+void drawScoreBoard(int whiteCount, int blackCount, int turnCount, int currentPlayer, int board[BOARD_SIZE][BOARD_SIZE]) {
+	char whiteScoreText[20]; // Buffer for white score text
+	char blackScoreText[20]; // Buffer for black score text
+	char statusText[50]; // Buffer for status text
+	char turnCountText[30]; // Buffer for turn count text
 
-	sprintf(whiteScore, "%d", whiteCount);
-	sprintf(blackScore, "%d", blackCount);
+	// Format the score text
+	sprintf(whiteScoreText, "White (AI 1): %d", whiteCount);
+	sprintf(blackScoreText, "Black (AI 2): %d", blackCount);
+	sprintf(turnCountText, "Turn: %d", turnCount); // Format the turn count text
+
+	// Determine the status of the game and format the status text
 	if (isGameOver(board)) {
 		if (whiteCount > blackCount) {
-			sprintf(currentPlayerText, "GAME OVER ! %s wins!", player1);
+			sprintf(statusText, "GAME OVER! AI 1 wins!");
 		} else if (whiteCount < blackCount) {
-			sprintf(currentPlayerText, "GAME OVER ! %s wins!", player2);
+			sprintf(statusText, "GAME OVER! AI 2 wins!");
 		} else {
-			sprintf(currentPlayerText, "GAME OVER ! Draw!");
+			sprintf(statusText, "GAME OVER! It's a draw!");
 		}
 	} else {
-		if (currentPlayer == 1) {
-			sprintf(currentPlayerText, "%sr's turn", player1);
-		} else if (currentPlayer == 2) {
-			sprintf(currentPlayerText, "%s's turn", player2);
-		}
+		sprintf(statusText, "Current turn: AI %d", currentPlayer);
 	}
 
+	// Set the color for the text (white)
 	glColor3f(0.0, 40.0, 200.0); // Blue color for the score board text
-	drawText("White", 5, 10, 580);
-	drawText(whiteScore, strlen(whiteScore), 10, 560);
-	drawText("Black", 5, 10, 520);
-	drawText(blackScore, strlen(blackScore), 10, 500);
-	drawText(currentPlayerText, strlen(currentPlayerText), 10, 460);
+
+	// Positions for the text, starting at the top left corner
+	int textPosX = 10; // 10 pixels from the left edge
+	int textPosY = 20; // 20 pixels from the top edge
+	int lineSpacing = 20; // Space between lines
+
+	// Draw the white score text
+	drawText(whiteScoreText, strlen(whiteScoreText), textPosX, textPosY);
+
+	// Move down for the next line
+	textPosY += lineSpacing;
+
+	// Draw the black score text
+	drawText(blackScoreText, strlen(blackScoreText), textPosX, textPosY);
+
+	// Move down for the next line
+	textPosY += lineSpacing;
+
+	// Draw the turn count text
+	drawText(turnCountText, strlen(turnCountText), textPosX, textPosY);
+
+	// Move down for the next line
+	textPosY += lineSpacing;
+
+	// Draw the status text
+	drawText(statusText, strlen(statusText), textPosX, textPosY);
 };
 
 

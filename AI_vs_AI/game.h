@@ -37,7 +37,7 @@ void drawGridLines();
 void drawStableCorners();
 void drawPiece(int x, int y, int player);
 void drawHintCircle(int x, int y, int player);
-void drawScoreBoard(int whiteCount, int blackCount, int currentPlayer, int board[BOARD_SIZE][BOARD_SIZE]);
+void drawScoreBoard(int whiteCount, int blackCount, int turnCount, int currentPlayer, int board[BOARD_SIZE][BOARD_SIZE]);
 void drawButton(char *text, int x, int y);
 
 

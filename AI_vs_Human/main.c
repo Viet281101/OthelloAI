@@ -29,20 +29,20 @@ void initBoard() {
 *@param (flag) draw the board inside game log
 */
 void logBoardState(FILE *logFile, int board[BOARD_SIZE][BOARD_SIZE]) {
-    fprintf(logFile, "    A   B   C   D   E   F   G   H \n");
-    fprintf(logFile, "  +---+---+---+---+---+---+---+---+\n");
-    for (int y = 0; y < BOARD_SIZE; y++) {
-        fprintf(logFile, "%d ", y + 1);
-        for (int x = 0; x < BOARD_SIZE; x++) {
-            char piece = ' ';
-            if (board[x][y] == 1) piece = 'W'; // white
-            else if (board[x][y] == 2) piece = 'B'; // black
-            fprintf(logFile, "| %c ", piece);
-        }
-        fprintf(logFile, "| %d\n", y + 1);
-        fprintf(logFile, "  +---+---+---+---+---+---+---+---+\n");
-    }
-    fprintf(logFile, "    A   B   C   D   E   F   G   H \n\n");
+	fprintf(logFile, "    A   B   C   D   E   F   G   H \n");
+	fprintf(logFile, "  +---+---+---+---+---+---+---+---+\n");
+	for (int y = 0; y < BOARD_SIZE; y++) {
+		fprintf(logFile, "%d ", y + 1);
+		for (int x = 0; x < BOARD_SIZE; x++) {
+			char piece = ' ';
+			if (board[x][y] == 1) piece = 'W'; // white
+			else if (board[x][y] == 2) piece = 'B'; // black
+			fprintf(logFile, "| %c ", piece);
+		}
+		fprintf(logFile, "| %d\n", y + 1);
+		fprintf(logFile, "  +---+---+---+---+---+---+---+---+\n");
+	}
+	fprintf(logFile, "    A   B   C   D   E   F   G   H \n\n");
 };
 
 /*
