@@ -1,55 +1,57 @@
+# AI for Othello Game
 
-# IA pour le jeu d'Othello
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Viet281101/OthelloAI) ![Github language count](https://img.shields.io/github/languages/count/Viet281101/OthelloAI) ![GitHub Created At](https://img.shields.io/github/created-at/Viet281101/OthelloAI)
 
-Un jeu d'Othello avec l'IA en utilse le langage C et [OpenGL](https://github.com/McNopper/OpenGL) GLUT. Il existe 2 modes de jeu: jouer avec l'humain et jouer avec l'intelligence artificielle.
+An Othello game with AI using C language and [OpenGL](https://github.com/McNopper/OpenGL) GLUT. There are 2 game modes: playing with a human and playing with artificial intelligence.
 
-Pour savoir comment jouer l'Othello, cliquer sur l'image suivant:
+To learn how to play Othello, click on the following image:
 
 [![alt text](othello_start.png)](https://www.eothello.com/)
 
 ## Compilation
 
-### Prérequis :
-- Installer Make avec la commande:
-    ```
-    sudo apt-get install make
-    ```
-- Et installer [GLUT](https://github.com/FreeGLUTProject/freeglut):
-    ```
-    sudo apt-get install freeglut3 freeglut3-dev
-    ```
-    ou
-    ```
-    sudo apt-get install libglut3-dev
-    ```
+### Prerequisites:
+- Install Make with the command:
+	```bash
+	sudo apt-get install make
+	```
+- And install [GLUT](https://github.com/FreeGLUTProject/freeglut):
+	```bash
+	sudo apt-get install freeglut3 freeglut3-dev
+	```
+	or
+	```bash
+	sudo apt-get install libglut3-dev
+	```
 
-- Cloner le projet de [mon GitHub](https://github.com/Viet281101/OthelloAI) sur votre ordinateur:
-  ```
-  git clone https://github.com/Viet281101/OthelloAI.git
-  ```
+- Clone the project from [my GitHub](https://github.com/Viet281101/OthelloAI) to your computer:
+	```bash
+	git clone https://github.com/Viet281101/OthelloAI.git
+	```
 
-### Pour compiler le jeu :
-- Aller dans la répertoire du projet "AI_Player" ou "Human_Player"
-    ```
-    cd Human_Player/
-    ```
-    ou
-    ```
-    cd AI_Player/
-    ```
-- Compiler avec le Makefile:
-    ```
-    make
-    ```
 
-## Lancement :
-- Lancez le fichier **othello**
-    ```
-    ./othello
-    ```
+### To compile the game:
+- Go to the project directory "AI_Player" or "Human_Player"
+	```bash
+	cd Human_Player/
+	```
+	or
+	```bash
+	cd AI_Player/
+	```
+- Compile with the Makefile:
+	```bash
+	make
+	```
 
-## Nettoyer :
-- Nettoyez les fichiers avec make:
-  ```
-  make clean
-  ```
+## Launch:
+- Run the **othello** file
+	```bash
+	./othello
+	```
+
+## Clean:
+- Clean the files with make:
+	```bash
+	make clean
+	```
